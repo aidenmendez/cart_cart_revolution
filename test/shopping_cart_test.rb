@@ -109,7 +109,6 @@ class ShoppingCartTest < Minitest::Test
     cart.add_product(product1)
     cart.add_product(product2)
     cart.add_product(product3)
-    
 
     assert_equal 43.33, cart.percentage_occupied
   end
