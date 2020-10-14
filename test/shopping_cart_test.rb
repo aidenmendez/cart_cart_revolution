@@ -44,6 +44,8 @@ class ShoppingCartTest < Minitest::Test
 
     assert_instance_of Hash, cart.details
     assert_equal 2, cart.details.count
+    assert_equal "King Soopers", cart.details[:name]
+    assert_equal 30, cart.details[:capacity]
   end
 
   def test_total_number_of_items_in_cart
@@ -96,5 +98,50 @@ class ShoppingCartTest < Minitest::Test
     cart.add_product(product4)
 
     assert_equal [product1, product3], cart.products_by_category(:paper)
+  end
+
+  def test_percentage_of_cart_occupied
+    product1 = Product.new(:paper, 'toilet paper', 3.70, '10')
+    product2 = Product.new(:meat, 'chicken', 4.50, '2')
+    product3 = Product.new(:paper, 'tissue paper', 1.25, '1')
+    product4 = Product.new(:produce, 'apples', 0.99, '20')
+    cart = ShoppingCart.new("King Soopers", "30items")
+    cart.add_product(product1)
+    cart.add_product(product2)
+    cart.add_product(product3)
+    
+
+    assert_equal 43.33, cart.percentage_occupied
+  end
+
+  def test_sorted_products_by_quantity
+    product1 = Product.new(:paper, 'toilet paper', 3.70, '10')
+    product2 = Product.new(:meat, 'chicken', 4.50, '2')
+    product3 = Product.new(:paper, 'tissue paper', 1.25, '1')
+    product4 = Product.new(:produce, 'apples', 0.99, '20')
+    cart = ShoppingCart.new("King Soopers", "30items")
+    cart.add_product(product1)
+    cart.add_product(product2)
+    cart.add_product(product3)
+    cart.add_product(product4)
+
+    assert_equal [product4, product1, product2, product3], cart.sorted_products_by_quantity
+  end
+
+  def test_product_breakdown
+    product1 = Product.new(:paper, 'toilet paper', 3.70, '10')
+    product2 = Product.new(:meat, 'chicken', 4.50, '2')
+    product3 = Product.new(:paper, 'tissue paper', 1.25, '1')
+    product4 = Product.new(:produce, 'apples', 0.99, '20')
+    cart = ShoppingCart.new("King Soopers", "30items")
+    cart.add_product(product1)
+    cart.add_product(product2)
+    cart.add_product(product3)
+    cart.add_product(product4)
+
+    assert_instance_of Hash, cart.product_breakdown
+    assert_equal [product1, product3], cart.product_breakdown[:paper]
+    assert_equal [product2], cart.product_breakdown[:meat]
+    assert_equal [product4], cart.product_breakdown[:produce]
   end
 end
