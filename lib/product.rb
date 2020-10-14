@@ -1,6 +1,6 @@
 class Product
-
   attr_reader :category, :name, :unit_price, :quantity
+  
   def initialize(category, name, unit_price, quantity)
     @category= category
     @name = name
@@ -11,5 +11,4 @@ class Product
   def total_price
     total = @quantity * @unit_price
   end
-
 end

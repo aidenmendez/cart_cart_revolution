@@ -3,12 +3,8 @@ class ShoppingCart
 
   def initialize(name, capacity)
     @name = name
-    @capacity = capacity
+    @capacity = capacity.to_i
     @products = []
-  end
-
-  def capacity
-    capacity_int = @capacity.to_i
   end
 
   def add_product(product)
@@ -27,6 +23,7 @@ class ShoppingCart
     products.each do |product|
       quantity_total += product.quantity
     end
+    
     quantity_total
   end
 
@@ -59,8 +56,7 @@ class ShoppingCart
         cat_hash[product.category] = [product] 
       end
     end
-    
+
     cat_hash
   end
-
 end
